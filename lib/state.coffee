@@ -16,6 +16,7 @@ state.inject = (link_) ->
 state.pagesInDom = ->
   $.makeArray $(".page").map (_, el) -> el.id
 
+#FIXME: is this where I might modify how this $(this).data('site') information is set for each page??
 state.urlPages = ->
   (i for i in $(location).attr('pathname').split('/') by 2)[1..]
 

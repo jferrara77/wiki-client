@@ -37,11 +37,21 @@ resolve.resolveLinks = (string, sanitize=escape) ->
     stashed[+digits]
 
   internal = (match, name) ->
-    slug = asSlug name
-    stash """<a class="internal" href="/#{slug}.html" data-page-name="#{slug}" title="#{resolve.resolutionContext.join(' => ')}">#{escape name}</a>"""
+    name_new = if name.indexOf('|') == -1 then name else name.split('|')[1]
+    slug = asSlug name.split('|')[0]
+    if name.slice(0, 4) == 'http'
+      stash """<a class="internal" href="/#{slug}.html" data-page-name="#{slug}" title="#{resolve.resolutionContext.join(' => ')}" style="color: rgb(227,150,50)">#{escape name_new}</a>"""
+    else
+     stash """<a class="internal" href="/#{slug}.html" data-page-name="#{slug}" title="#{resolve.resolutionContext.join(' => ')}">#{escape name_new}</a>"""
+
+ #   name_new = if name.indexOf('|') == -1 then name else name.split('|')[1]	 
+ #   slug = asSlug name.split('|')[0]
+ #   stash '<a class="internal" href="/' + slug + '.html" data-page-name="' + slug + '" title="' + resolve.resolutionContext.join(' => ') + '">' + escape(name) + '</a>'
+
 
   external = (match, href, protocol, rest) ->
-    stash """<a class="external" target="_blank" href="#{href}" title="#{href}" rel="nofollow">#{escape rest} <img src="/images/external-link-ltr-icon.png"></a>"""
+#    stash """<a class="external" target="_blank" href="#{href}" title="#{href}" rel="nofollow">#{escape rest} <img src="/images/external-link-ltr-icon.png"></a>"""
+    stash """<a class="external" target="_blank" href="#{href}" title="#{href}" style="color: rgb(222,35,91)" rel="nofollow">#{escape rest} <img src="/images/external-link-ltr-icon.png"></a>"""
 
   # markup conversion happens in four phases:
   #   - unexpected markers are adulterated

@@ -25,10 +25,10 @@ showPage = (name, loc) ->
   createPage(name, loc).appendTo('.main').each refresh.cycle
 
 doInternalLink = (name, $page, site=null) ->
-  name = asSlug(name)
+  name = asSlug(name.split('|')[0]) #FIXME: same as below
   $($page).nextAll().remove() if $page?
   lineup.removeAllAfterKey $($page).data('key') if $page?
-  showPage(name,site)
+  showPage(name.split('|')[0],site) #FIXME: could break things what I did here
   active.set($('.page').last())
 
 showResult = (pageObject, options={}) ->
